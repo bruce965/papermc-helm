@@ -1,0 +1,30 @@
+
+# PaperMC settings.
+paper:
+
+  # PaperMC version (e.g.: "1.20.1")
+  # If set to "latest", the latest version will be used; the version check is
+  # performed every time the server starts.
+  version: latest
+
+  # PaperMC build (e.g.: 50)
+  # If set to "latest", the latest build for the specified version will be used;
+  # the version check is performed every time the server starts.
+  build: latest
+
+# Minecraft settings.
+minecraft:
+
+  # To run a Minecraft server, you must read and accept the EULA.
+  # https://aka.ms/MinecraftEULA
+  acceptEula: false
+
+# Disk size for world data, plugins, etc...
+diskSize: 1Gi
+
+# Memory limit the server.
+# The maximum memory available to the Java heap will be 80% of this value.
+memoryLimit: 4Gi
+
+# CPU limit for the server.
+cpuLimit: 4

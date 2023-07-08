@@ -1,0 +1,51 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: papermc
+  template:
+    metadata:
+      labels:
+        app: papermc
+    spec:
+      containers:
+        - name: {{ .Release.Name }}-container
+          image: amazoncorretto:17.0.7
+          command: [ "/bin/bash", "/app/startup/papermc-startup.sh" ]
+          securityContext:
+            runAsUser: 1000
+            runAsGroup: 1000
+          ports:
+            - containerPort: 25565
+          volumeMounts:
+            - name: startup-volume
+              mountPath: /app/startup
+              readOnly: true
+            - name: data-volume
+              mountPath: /app/data
+          env:
+            - name: PAPERMC_VERSION
+              value: {{ .Values.paper.version }}
+            - name: PAPERMC_BUILD
+              value: {{ .Values.paper.build }}
+            - name: MINECRAFT_ACCEPTEULA
+              value: {{ quote .Values.minecraft.acceptEula }}
+          resources:
+            requests:
+              memory: 32Mi
+              cpu: 10m
+            limits:
+              memory: {{ .Values.memoryLimit }}
+              cpu: {{ .Values.cpuLimit }}
+      volumes:
+        - name: startup-volume
+          configMap:
+            name: {{ .Release.Name }}-startup-config
+            defaultMode: 0777
+        - name: data-volume
+          persistentVolumeClaim:
+            claimName: {{ .Release.Name }}-data-pvc

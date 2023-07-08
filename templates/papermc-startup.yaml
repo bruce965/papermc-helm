@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Release.Name }}-startup-config
+data:
+  papermc-startup.sh: |-
+    {{- .Files.Get "config/papermc-startup.sh" | indent 4 }}

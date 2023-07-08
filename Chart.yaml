@@ -1,0 +1,4 @@
+apiVersion: v2
+name: paper-mc
+version: 0.1.0
+description: PaperMC server
